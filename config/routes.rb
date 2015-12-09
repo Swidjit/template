@@ -18,7 +18,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :videos
   resources :projects
 
   resources :url_videos, :only => [:index, :show, :destroy]
@@ -34,10 +33,11 @@ Rails.application.routes.draw do
   get '/climate-justice/:id' => 'posts#show'
   get '/social-justice/:id' => 'posts#show'
   get '/gender-equality/:id' => 'posts#show'
+  get '/videos' => 'videos#index'
   get '/tags/:tag' => 'posts#index'
   get '/resume' => 'pages#resume'
 
-  get '/pages/:page_name' => 'pages#index', :as => :pages
+  get '/pages/:page_name' => 'pages#show', :as => :pages
   get '/sitemap.xml' => 'pages#sitemap'
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 

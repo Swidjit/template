@@ -1,0 +1,39 @@
+.row
+  .large-12.columns
+    %h3 My dance videos
+    #results
+:javascript
+
+  // Get Uploads Playlist
+  $.get(
+     "https://www.googleapis.com/youtube/v3/channels",{
+     part : 'contentDetails',
+     id : 'UCPtJaV3Q9t8Asf1yDW4WxcQ',
+     key: 'AIzaSyDd8fUMFim2BxBwBA7Ngp6OvSsGI9cXmTU'},
+     function(data) {
+        $.each( data.items, function( i, item ) {
+            pid = item.contentDetails.relatedPlaylists.uploads;
+            console.log(pid);
+            getVids(pid);
+        });
+    }
+  );
+
+  //Get Videos
+  function getVids(pid){
+      $.get(
+          "https://www.googleapis.com/youtube/v3/playlistItems",{
+          part : 'snippet',
+          maxResults : 20,
+          playlistId : pid,
+          key: 'AIzaSyDd8fUMFim2BxBwBA7Ngp6OvSsGI9cXmTU'},
+          function(data) {
+              var results;
+              $.each( data.items, function( i, item ) {
+                  results = '<li>'+ item.snippet.title +'</li>';
+                  console.log(item);
+                  $('#results').append('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+ item.snippet.resourceId.videoId +'" frameborder="0" allowfullscreen></iframe>');
+              });
+          }
+      );
+  }

@@ -4,6 +4,10 @@ class PagesController < ApplicationController
 
   end
 
+  def show
+    render params[:page_name]
+  end
+
   def sitemap
 
   end
