@@ -15,11 +15,12 @@
     %section.top-bar-section
       %ul.left
         %li.divider
-        %li.has-dropdown
-          %a{:href => "/brain-games"} Causes
+        %li.has-dropdown.small-dropdown
+          %a{:href => "/causes"} Causes
           %ul.dropdown.m-menu
-            %li
-              .row.column.padless
+            %li=link_to 'Climate Justice', '/climate-justice'
+            %li=link_to 'Social Justice', '/social-justice'
+            %li=link_to 'Gender Equality', '/gender-equality'
 
         %li.divider
         %li.has-dropdown

@@ -26,4 +26,10 @@ namespace :init do
     ActsAsTaggableOn::Tag.create(:name => "neuroplasticity")
   end
 
+  task :seed_categories => :environment do
+    Category.create(:title=>'Climate Justice',:description=>'Climate Justice',:slug=>'climate-justice')
+    Category.create(:title=>'Social Justice',:description=>'Social Justice',:slug=>'social-justice')
+    Category.create(:title=>'Gender Equality',:description=>'Gender Equality',:slug=>'gender-equality')
+  end
+
 end

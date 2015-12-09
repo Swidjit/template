@@ -24,8 +24,8 @@ class PostsController < ApplicationController
     if params.has_key?(:tag)
       @posts=@posts.tagged_with(params[:tag])
     end
-    if params.has_key?(:category)
-      @posts=@posts.where(:category_id=>params[:category_id])
+    if params.has_key?(:cat)
+      @posts=@posts.where(:category_id=>params[:cat])
     end
 
     @total_pages = (@posts.length / 15) + 1
@@ -173,6 +173,6 @@ class PostsController < ApplicationController
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
   end
   def post_params
-    params.require(:post).permit(:user_id, :resource_type, :category_id,:title,:body, :tag_list, websites_attributes: [:title, :url, :description, :image_url],url_images_attributes: [:url,:title, :description], url_videos_attributes: [:title, :url, :description, :video_id, :video_source])
+    params.require(:post).permit(:user_id, :category_id,:title,:body, :tag_list, websites_attributes: [:title, :url, :description, :image_url],url_images_attributes: [:url,:title, :description], url_videos_attributes: [:title, :url, :description, :video_id, :video_source])
   end
 end

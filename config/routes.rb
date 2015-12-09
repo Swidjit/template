@@ -28,9 +28,12 @@ Rails.application.routes.draw do
   resources :comments, :only => [:create, :destroy]
 
   root 'pages#home'
+  get '/climate-justice/' => 'posts#index', :cat=>1
+  get '/social-justice/' => 'posts#index', :cat=>2
+  get '/gender-equality/' => 'posts#index', :cat=>3
   get '/climate-justice/:id' => 'posts#show'
-  get '/social-justice/:id' => 'posts#index'
-  get '/gender-equality/:id' => 'posts#index'
+  get '/social-justice/:id' => 'posts#show'
+  get '/gender-equality/:id' => 'posts#show'
   get '/tags/:tag' => 'posts#index'
   get '/resume' => 'pages#resume'
 

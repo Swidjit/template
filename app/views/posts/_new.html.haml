@@ -11,7 +11,7 @@
       =f.submit "save", :class=>"button large"
     .large-4.medium-5.columns
 
-
+      =f.select :category_id, options_for_select({'climate'=>1,'social justice'=>2,'gender equality'=>3})
       %input{:type => 'text', :name => 'tags', :class => 'autocomplete', :autocomplete=>'off', :placeholder => 'tag keywords or topics'}
       =f.hidden_field :tag_list
       .autocomplete-options
