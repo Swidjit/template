@@ -1,0 +1,3 @@
+.url-image[url_image]
+  =image_tag(url_image.url)
+  =render :partial=>'posts/actions',:locals=>{model:'UrlImage',post: url_image,user: url_image.post.user}

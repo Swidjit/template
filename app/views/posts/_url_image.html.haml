@@ -1,0 +1,7 @@
+.large-6.columns{:url=>url}
+  .remove x
+  .embed-container
+
+    =image_tag(url)
+
+  %input{:name => "post[url_images_attributes][][url]", :type => "hidden", :value => url}

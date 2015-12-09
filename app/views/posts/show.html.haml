@@ -1,19 +1,73 @@
+-content_for :head do
+  %title #{@item.title} | Games, Puzzles, Brainteasers & IQ Tests
+  %meta{:content => @item.title, :property => "og:title"}
+  %meta{:content => "PlayWithYourMind | Brain Games & Mind Puzzles", :property => "og:site_name"}
+  %meta{:content => image_url('brain-games.png'), :property => "og:image"}
+  %meta{:content => @item.body.truncate(144), :property => "og:description"}
+  %meta{:content => @item.title, :property => "twitter:title"}
+  %meta{:content => "PlayWithYourMind | Brain Games & Mind Puzzles", :property => "twitter:site"}
+  %meta{:content => image_url('brain-games.png'), :property => "twitter:image"}
+  %meta{:content => @item.body.truncate(144), :property => "twitter:description"}
+  %meta{:content => "summary", :property => "twitter:card"}
+  %meta{:content => "#{@item.title} | PlayWithYourMind", :property => "title"}
+  %meta{:property => "description", :content => @item.body.truncate(144)}
+
 .row
   .large-12.columns
     %h4=@item.title
     -if can? :update, @item
       =link_to 'edit', edit_post_path(@item)
-
+      =link_to post_path(@item.id), :method=>:delete do
+        .delete
+          %i.fi-trash
+          delete
+    .breadcrumb
+      =link_to "Posts", "/brain-fun/"
+      >
+      -@item.tag_list.each do |tag|
+        =link_to '#'+tag, '/brain-fun/tags/'+tag
 .row
   .large-8.columns
     .post[@item]
-      %p=@item.body
-      =render :partial => 'posts/post_actions', :locals=>{post:@item}
+      .body
+        %p=@item.body
+      =render :partial => 'posts/actions', :locals=>{post:@item,model:'Post',user: @item.user}
+      :javascript
+        var substitutions = [];
+        setTimeout(addAttachments,500);
+
+        function addAttachments() {
+          console.log(substitutions);
+          txt = $('.body').html();
+          $.each(substitutions, function(index,value) {
+            regex = new RegExp(value['url'],"g");
+            //txt= txt.replace(regex,value['txt']);
+            txt= txt.replace(value['url'],value['txt']);
+            console.log(txt);
+          });
+          $('.body').html(txt);
+        }
+      -@item.url_videos.each do |w|
+        :javascript
+
+          html = '</p>#{j render :partial => "url_videos/url_video", :locals=>{url_video:w}}<p>';
+          substitutions.push({'url':'#{w.url}','txt':html});
+      -@item.url_images.each do |w|
+        :javascript
+          html = '</p>#{j render :partial => "url_images/url_image", :locals=>{url_image:w}}<p>';
+          substitutions.push({'url':'#{w.url}','txt':html});
+      -@item.websites.each do |w|
+        :javascript
+          html = '</p>#{j render :partial => "websites/website", :locals=>{website:w}}<p>';
+          substitutions.push({'url':'#{w.url}','txt':html});
+        -puts w.url
   .large-4.columns
-    -@item.tag_list.each do |t|
-      =link_to t, filtered_posts_path('all',t)
-    #comments{:style=>'margin-top: 25px;'}
-      %h6 Comments
+    -if @item.tag_list.size > 0
+      %h5 Tags
+      -@item.tag_list.each do |tag|
+        =link_to '#'+tag, '/brain-fun/tags/'+tag
+    #comments
+      %h4 Comments
       .comments
         = render :partial => 'comments/comment', :collection => @comments, :as => :comment
       -if user_signed_in?

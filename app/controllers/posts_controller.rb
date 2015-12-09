@@ -63,53 +63,116 @@ class PostsController < ApplicationController
   end
 
   def create_or_destroy_reaction
-    @item = Post.find(params[:id])
+    @model = params[:model]
+    if @model == 'Post'
+      @item = Post.find(params[:id])
+      @model = 'post-'+@item.id.to_s
+      importance = 1
+    else
+      @att = @model.constantize.find(params[:id])
+      @item = @att.post
+      @model = params[:model].downcase+'-'+@att.id.to_s
+      importance = 0.3
+    end
     cancelled = false
-    @reaction = Reaction.where(:post_id => params[:id], :user_id => current_user.id, :reaction_type => params[:type]).first
+    @reaction = Reaction.where(:reactable_type => params[:model], :reactable_id => params[:id], :user_id => current_user.id, :reaction_type => params[:type]).first
     if @reaction.present?
       Reaction.destroy(@reaction.id)
       cancelled = true
     else
-      @reaction = Reaction.create!(:post_id => params[:id], :user_id => current_user.id, :reaction_type => params[:type])
+      @reaction = Reaction.create!(:reactable_type => params[:model], :reactable_id => params[:id], :user_id => current_user.id, :reaction_type => params[:type])
     end
     case params[:type]
       when 'like'
         if cancelled
-          @item.update_attribute(:importance, @item.importance-1)
+          @item.update_attribute(:importance, @item.importance-importance)
         else
-          @item.update_attribute(:importance, @item.importance+1)
+          @item.update_attribute(:importance, @item.importance+importance)
+        end
+        if @att.present?
+
+          @count = @att.reactions.liked.size
+        else
+
+          @count = @item.reactions.liked.size
         end
 
-        @count = @item.reactions.liked.size
         @class = "like"
         render 'reactions/liked'
       when 'love'
         if cancelled
-          @item.update_attribute(:importance, @item.importance-3)
+          @item.update_attribute(:importance, @item.importance-(importance*3))
         else
-          @item.update_attribute(:importance, @item.importance+3)
+          @item.update_attribute(:importance, @item.importance+(importance*3))
         end
-
-
-        @count = @item.reactions.loved.size
+        if @att.present?
+          @count = @att.reactions.loved.size
+        else
+          @count = @item.reactions.loved.size
+        end
         @class = "love"
         render 'reactions/liked'
       when 'share'
         if cancelled
-          @item.update_attribute(:importance, @item.importance-5)
+          @item.update_attribute(:importance, @item.importance-(importance*5))
         else
-          @item.update_attribute(:importance, @item.importance+5)
+          @item.update_attribute(:importance, @item.importance+(importance*5))
         end
-        @count = @item.reactions.shared.size
+        if @att.present?
+          @count = @att.reactions.shared.size
+        else
+          @count = @item.reactions.shared.size
+        end
         @class = "share"
         render 'reactions/liked'
 
     end
   end
+  def scrape_url_for
+
+    if params[:url].include?('?')
+      @clean_url = params[:url].split('?').first
+    else
+      @clean_url = params[:url]
+    end
+    @page = MetaInspector.new(params[:url],
+                              :warn_level => :store,
+                              :connection_timeout => 5, :read_timeout => 5,
+                              :headers => { 'User-Agent' => user_agent, 'Accept-Encoding' => 'identity' })
+    @url=params[:url]
+    if params[:url] =~ /^(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([\w-]{10,})/
+      @video_url = params[:url]
+      @video_id = params[:url].split('/')[-1].split('=')[-1]
+      if @video_url =~ /^(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([\w-]{10,})/
+        @video_type = "youtube"
+      elsif @video_url.include? 'vimeo'
+        @video_type = 'vimeo'
+      elsif @video_url.include? 'vine.co'
+        @video_type = 'vine'
+      end
+      render '/posts/video_scrape'
+    elsif ['gif','jpg','jpeg','png'].include?(@clean_url.split('.').last)
+      @image_url = @clean_url
+      render '/posts/image_scrape'
+    elsif params[:url]
+
+
+      if @page.response.nil?
+        render :nothing => :true
+      else
+        render '/posts/link_scrape'
+      end
+    else
+
+      render 'scrapes/scrape_failed'
+    end
+  end
 
   private
-
+  def user_agent
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
+  end
   def post_params
-    params.require(:post).permit(:user_id, :resource_type, :category_id,:title,:body, :tag_list)
+    params.require(:post).permit(:user_id, :resource_type, :category_id,:title,:body, :tag_list, websites_attributes: [:title, :url, :description, :image_url],url_images_attributes: [:url,:title, :description], url_videos_attributes: [:title, :url, :description, :video_id, :video_source])
   end
 end

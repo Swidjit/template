@@ -1,0 +1,11 @@
+.large-6.columns{:url=>page.url}
+  .remove x
+  .embed-container
+
+    %iframe{:allowfullscreen => "", :frameborder => "0", :height => "100%", :mozallowfullscreen => "", :src => 'https://www.youtube.com/embed/'+id, :webkitallowfullscreen => "", :width => "100%"}
+
+  %input{:name => "post[url_videos_attributes][][url]", :type => "hidden", :value => page.url}
+  %input{:name => "post[url_videos_attributes][][title]", :type => "hidden", :value => page.title}
+  %input{:name => "post[url_videos_attributes][][description]", :type => "hidden", :value => page.description.gsub("'","")}
+  %input{:name => "post[url_videos_attributes][][video_id]", :type => "hidden", :value => @video_id}
+  %input{:name => "post[url_videos_attributes][][video_source]", :type => "hidden", :value => @video_type}

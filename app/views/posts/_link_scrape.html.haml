@@ -1,0 +1,9 @@
+.large-12.columns{:url=>@url}
+  .remove x
+  .link-scrape
+    .link-title=page.title
+    .link-url=page.description.truncate(144)
+  %input{:name => "post[websites_attributes][][url]", :type => "hidden", :value => @url}
+  %input{:name => "post[websites_attributes][][title]", :type => "hidden", :value => page.title}
+  %input{:name => "post[websites_attributes][][description]", :type => "hidden", :value => page.description.gsub("'","")}
+  %input{:name => "post[websites_attributes][][image_url]", :type => "hidden", :value => page.images.best}

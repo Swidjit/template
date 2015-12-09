@@ -1,8 +1,10 @@
 class Reaction < ActiveRecord::Base
+
+  belongs_to :reactable, polymorphic:true
   belongs_to :user
   belongs_to :post
 
-  validates_presence_of :post, :user, :reaction_type
+  validates_presence_of :reactable_type, :reactable_id, :user, :reaction_type
 
   scope :loved, lambda{ where("#{table_name}.reaction_type = ?","love")}
   scope :liked, lambda{ where("#{table_name}.reaction_type = ?","like")}

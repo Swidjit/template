@@ -1,21 +1,26 @@
 -content_for :head do
-  %title Posts
+  %title Brainy Fun | PlayWithYourMind | Brain Games, Puzzles, Optical Illusions & More
+  %meta{:content => "Brainy Fun | Games, Puzzles, Optical Illusions & More", :property => "og:title"}
+  %meta{:content => "PlayWithYourMind | Brain Games & Mind Puzzles", :property => "og:site_name"}
+  %meta{:content => image_url('brain-games.png'), :property => "og:image"}
+  %meta{:content => "Share and discover games, tests, illusions, and more to play with your mind!", :property => "og:description"}
+  %meta{:content => "Brainy Fun | Games, Puzzles, Optical Illusions & More", :property => "twitter:title"}
+  %meta{:content => "PlayWithYourMind | Brain Games & Mind Puzzles", :property => "twitter:site"}
+  %meta{:content => image_url('brain-games.png'), :property => "twitter:image"}
+  %meta{:content => "Share and discover games, tests, illusions, and more to play with your mind!", :property => "twitter:description"}
+  %meta{:content => "summary", :property => "twitter:card"}
+  %meta{:content => "Brainy Fun | Games, Puzzles, Optical Illusions & More", :property => "title"}
+  %meta{:property => "description", :content => "Share and discover games, tests, illusions, and more to play with your mind!"}
 .row
-  .large-4.columns
-    %h4 Adding Content
-    %button#debate-post.right.button.dropdown{"aria-controls" => "post-options", "aria-expanded" => "false", "data-dropdown" => "post-options", :href => "#"} Post about election
-    %ul#post-options.f-dropdown{"aria-hidden" => "true", "data-dropdown-content" => ""}
-      %li
-        %div{"data-post-type" => "video", :class=>"post-option"} Post a Video
-      %li
-        %div{"data-post-type" => "image", :class=>"post-option"} Post an Image
-      %li
-        %div{"data-post-type" => "link", :class=>"post-option"} Post a Link
-      %li
-        %div{"data-post-type" => "prose", :class=>"post-option"} Post a Comment
-  .large-8.columns
+  .large-9.columns
     #posts
-      %h4 Recent Posts
+      %h4 Brain Fun
+      -if params.has_key?(:tag)
+        .breadcrumb
+
+          =link_to "Posts", "/brain-fun/"
+          >
+          =link_to '#'+params[:tag], '/brain-fun/tags/'+params[:tag]
 
 
       -if @posts.size > 0
@@ -23,3 +28,4 @@
 
       -else
         %p No listings
+  .large-3.columns

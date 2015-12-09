@@ -1,16 +1,60 @@
-%h4 Post a comment
-=form_for :post, url: posts_path, :id =>"post-form" do |f|
+=form_for :post, url: posts_path do |f|
   =f.hidden_field :resource_type, :value=>'prose'
-  %label Say what's on your mind
-  =f.text_area :body, :class =>'first-input'
-  %label Title
-  =f.text_field :title
-  %label Category
-  -#=f.select :category_id, content_tag(:option,'--',:value=>"")+options_from_collection_for_select(Category.all, 'id', 'name'),:id=>'category-id'
-  %label Tag relevant keywords or topics
-  #tag-list
-  %input{:type => 'text', :name => 'tags', :class => 'autocomplete', :autocomplete=>'off'}
-  =f.hidden_field :tag_list
-  .autocomplete-options
-  =f.submit "save"
+
+  .row#post-form
+    .large-12.columns
+      =f.text_field :title, :placeholder => 'Untitled'
+
+    .large-8.medium-4.columns
+      =f.text_area :body, :class =>'first-input'
+      #tag-list
+      =f.submit "save", :class=>"button large"
+    .large-4.medium-5.columns
+
+
+      %input{:type => 'text', :name => 'tags', :class => 'autocomplete', :autocomplete=>'off', :placeholder => 'tag keywords or topics'}
+      =f.hidden_field :tag_list
+      .autocomplete-options
+      .row#post-attachments
+        #attachments
+
+
+:javascript
+  var urls = new Array;
+  $('#post_body').on('paste', function() {
+    $self = $(this);
+
+
+      setTimeout(function(){
+          if(!$('#post_title').val()) {
+            $txt = $self.val().replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '');
+            $('#post_title').val($txt.substring(0, 30).split(" ").slice(0, -1).join(" ").replace(/[^a-zA-Z\d\s:]/g, ''));
+          }
+          var $content = $self.val();
+
+          var text = $content;
+          var regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+          while (matches = regexp.exec(text))
+          {
+            if(urls.indexOf(matches[0]) == -1) {
+              urls.push(matches[0]);
+              $.get('#{scrape_url_for_posts_path}',{url:matches[0]});
+            }
+          }
+          $.each(urls, function(index, value) {
+
+
+          });
+      },100);
+
+   });
+   $(document).on('click','.remove',function() {
+    url = $(this).parent().attr('url');
+    console.log(url);
+    urls.splice(urls.indexOf(url),1);
+      $(this).parent().remove();
+   });
+
+
 

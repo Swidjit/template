@@ -1,0 +1,4 @@
+.website
+  .title=link_to website.title, website.url, :target=>'_new'
+  %p=website.description
+  =render :partial=>'posts/actions',:locals=>{model:'Website',post: website,user: website.post.user}

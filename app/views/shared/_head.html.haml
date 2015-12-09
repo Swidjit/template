@@ -5,9 +5,8 @@
         %h1
           .hide-for-small
             %i.fi-star{:style=>"font-size: 30px;position:relative;top:3px;  margin-right: 4px;margin-left: 8px;"}
-            =link_to 'Site Name', root_path
+            =link_to 'CrazyDancingGuy', root_path
           .show-for-small-only
-
             =link_to root_path do
               %i.fi-star{:style=>"font-size: 30px;position:relative;top:3px;  margin-right: 4px;margin-left: 8px;"}
       %li.toggle-topbar.menu-icon
@@ -15,32 +14,40 @@
           %span Menu
     %section.top-bar-section
       %ul.left
+        %li.divider
+        %li.has-dropdown
+          %a{:href => "/brain-games"} Causes
+          %ul.dropdown.m-menu
+            %li
+              .row.column.padless
+
+        %li.divider
+        %li.has-dropdown
+          %a{:href => "/brain-fitness-games"} Videos
+          %ul.dropdown.m-menu
+            %li
+              .row.column.padless
+
+        %li.divider
+        %li.has-dropdown.small-dropdown
+          %a{:href => "/brain-fun"} Projects
+          %ul.dropdown.m-menu
+
+
+      %ul.right
         -if user_signed_in?
           %li.divider
-          %li.has-dropdown.hide-for-small
-            %a{:href => "#"} POST
+          %li{:style => "background-color: #835B9F;"}
+            .post-button
+              %i.fi-plus
+              %span post
+          %li.divider
+          %li.has-dropdown.small-dropdown
+            =link_to current_user.username, user_path(current_user.username)
             %ul.dropdown.m-menu
               %li
-                .row{:style=>"background-color:#835B9F;"}
-                  .large-4.medium-6.small-12.columns.post-option{"data-post-type" => "prose", :class=>"post-button"}
-                    %i.fi-pencil
-                    comment
-                    %p contribute to the political dialogue
-                  .large-4.medium-6.small-12.columns.post-option{"data-post-type" => "link", :class=>"post-button"}
-                    %i.fi-web
-                    link
-                    %p news, blogs and other election resources
-                  .large-4.medium-6.small-12.columns.post-option{"data-post-type" => "video", :class=>"post-button"}
-                    %i.fi-video
-                    video
-                    %p embed a video from youtube, vimeo or vine
-                .row{:style=>"background-color:#835B9F;"}
-                  .large-6.medium-6.small-12.columns.post-option{"data-post-type" => "image", :class=>"post-button"}
-                    %i.fi-image
-                    image
-                    %p upload a photo, graphic or political meme
-        -if user_signed_in?
-          %li=link_to current_user.username, user_path(current_user.username)
+                %ul
+                  %li=link_to "logout", destroy_session_path(:user), :method => :delete
         -else
           %li
             %a{"data-reveal-id" => "login", :href => "#"} Login

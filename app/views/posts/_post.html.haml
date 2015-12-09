@@ -1,6 +1,42 @@
 .post[post]
-  .post-title=post.title
-  .post-body=post.body
-  -post.tag_list.each do |t|
-    =link_to t, posts_path(:tag=>t)
-    ,
+  -if post.url_videos.count > 0
+    =link_to '/brain-fun/'+post.slug do
+      .row
+        .large-12.columns
+          .post-title=post.title
+          =render post.url_videos.first
+          .post-body=post.body.truncate(420)
+  -elsif post.url_images.count > 0
+    =link_to '/brain-fun/'+post.slug do
+      .row
+        .large-12.columns
+          .post-title=post.title
+          =render post.url_images.first
+
+          .post-body=post.body.truncate(420)
+  -elsif post.websites.first.present?
+    =link_to '/brain-fun/'+post.slug do
+      .topic
+        .post-title=post.title
+        -if post.websites.first.url == post.body
+          =render post.websites.first
+        .post-body=post.body.truncate(420)
+
+  -else
+    =link_to '/brain-fun/'+post.slug do
+      .topic
+        .post-title=post.title
+        .post-body=post.body.truncate(420)
+        =render :partial=>'posts/actions',:locals=>{model:'Post',post: post,user: post.user}
+
+
+  =render :partial=>'posts/actions',:locals=>{model:'Post',post: post,user: post.user}
+  .post-tags
+    -post.tag_list.each do |tag|
+      .tag=link_to '#'+tag, '/brain-fun/tags/'+tag
+  -if current_user == post.user
+    =link_to post_path(post.id), :method=>:delete, :remote=>:true do
+      .delete
+        %i.fi-trash
+        delete
+

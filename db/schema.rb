@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117235524) do
+ActiveRecord::Schema.define(version: 20151207141334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20151117235524) do
     t.integer  "category_id"
     t.string   "resource_type"
     t.string   "resource_id"
-    t.integer  "importance",    default: 0
+    t.float    "importance",    default: 0.0
     t.string   "title"
     t.text     "body"
     t.string   "slug"
@@ -59,9 +59,10 @@ ActiveRecord::Schema.define(version: 20151117235524) do
   create_table "reactions", force: :cascade do |t|
     t.string   "reaction_type"
     t.integer  "user_id"
-    t.integer  "post_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "reactable_id"
+    t.string   "reactable_type"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -83,6 +84,27 @@ ActiveRecord::Schema.define(version: 20151117235524) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "url_images", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.string  "title"
+    t.text    "description"
+    t.string  "image_source"
+    t.string  "url"
+    t.string  "slug"
+  end
+
+  create_table "url_videos", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.string  "title"
+    t.text    "description"
+    t.string  "video_source"
+    t.string  "video_id"
+    t.string  "url"
+    t.string  "slug"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -109,5 +131,15 @@ ActiveRecord::Schema.define(version: 20151117235524) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "websites", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.string  "title"
+    t.text    "description"
+    t.string  "image_url"
+    t.string  "url"
+    t.string  "slug"
+  end
 
 end

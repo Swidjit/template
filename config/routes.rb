@@ -11,16 +11,30 @@ Rails.application.routes.draw do
   resources :posts, :only => [:create, :update, :destroy, :show,:index, :edit] do
     collection do
       get 'autocomplete_tag_search'
+      get 'scrape_url_for'
     end
     member do
       post 'create_or_destroy_reaction'
     end
   end
+
+  resources :videos
+  resources :projects
+
+  resources :url_videos, :only => [:index, :show, :destroy]
+  resources :url_images, :only => [:index, :show, :destroy]
+  resources :websites, :only => [:index, :show, :destroy]
+
   resources :comments, :only => [:create, :destroy]
 
   root 'pages#home'
+  get '/climate-justice/:id' => 'posts#show'
+  get '/social-justice/:id' => 'posts#index'
+  get '/gender-equality/:id' => 'posts#index'
+  get '/tags/:tag' => 'posts#index'
+  get '/resume' => 'pages#resume'
+
   get '/pages/:page_name' => 'pages#index', :as => :pages
-  get '/posts/:category/:tag' => 'posts#index', :as => :filtered_posts
   get '/sitemap.xml' => 'pages#sitemap'
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
