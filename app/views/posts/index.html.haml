@@ -29,3 +29,17 @@
       -else
         %p No listings
   .large-3.columns
+    -case @cat
+      -when 1
+        %a.twitter-timeline{"data-widget-id" => "674737302011277312", :href => "https://twitter.com/search?q=-hoax%20-scam%20-plot%20-liberal%20%23climatechange%20OR%20%23climatejustice%20OR%20%23globalwarming"} loading tweets...
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      -when 2
+        %a.twitter-timeline{"data-widget-id" => "674738823776063489", :href => "https://twitter.com/search?q=%23blacklivesmatter%20OR%20%23socialjustice%20OR%20%23equality%20OR%20%23equalrights%20OR%20%23humanrights%20OR%20%23whiteprivilege"} loading tweets...
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      -when 3
+        %a.twitter-timeline{"data-widget-id" => "674739682538889217", :href => "https://twitter.com/search?q=%23genderequality%20OR%20%23heforshe%20OR%20%23womensrights%20OR%20%23equalpay%20OR%20%23wagegap%20OR%20%23maleprivilege"} loading tweets...
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+

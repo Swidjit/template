@@ -1,0 +1,67 @@
+MyApplication extends Google.Application
+
+  //Globals
+  $MY_SKILLS = ['Product Design','Web Development','User Experience Design','Creative Problem Solving', 'Strategy & Planning']
+  $MY_OBJECTIVES = ['Climate Justice','Social Justice','Gender Equality','To build cool and meaningful technology']
+  $MY_HOBBIES = ['Freestyle Dance','Permaculture','Abstract Photography','Cooking']
+  $MY_LANGUAGES = ['English','Ruby','Javascript/jQuery','HTML/CSS','PHP','Java']
+
+
+  public void MyApplication(Application myApp) {
+
+    //i'm good enough and smart enough and gosh darnit people like me
+    super(me);
+
+    //load in basic info
+    myApp.setHeaders($MY_SKILLS,$MY_OBJECTIVES,$MY_HOBBIES,$MY_LANGUAGES);
+
+    //set the perfect tonal balance for the cover letter
+    myApp.cover_letter.setDefaultStyle(Style.innovative);
+    myApp.cover_letter.setDefaultStyle(Style.intelligent, 0.3);
+    myApp.cover_letter.addStyle(Style.playful,0.1);
+    myApp.cover_letter.addStyle(Style.mysterious,0.1);
+
+    //now, seal the deal with that killer resume
+    myApp.resume.setDefaultStyle(Style.creative);
+    myApp.resume.addStyle(Style.versatile,0.3);
+    myApp.resume.addStyle(Style.prolific,0.2);
+    myApp.resume.addStyle(Style.playful,0.1);
+
+    //an ivy league degree I never even use to my advantage... hello male white privilege
+    myApp.resume.addEduction('BS','Cornell','Neurobiology & Behavior','2001')
+
+    searchAndApply(myApp);
+  }
+
+  public searchAndApply(myApp) {
+
+    // silicon valley sounds amazing ... but I like rain and water
+    var search_params = {:locations=>'NYC,Boston,Philadelphia,Washington', :teams=>'Product Management, Social Impact, Business Strategy, Engineering & Design'}
+
+    //crossing my Ts ... and my fingers
+    System.triple_check_for_embarassing_typos([myApp.cover_letter,myApp.resume])
+
+    $.get(
+      Google.careers,
+      {params: search_params},
+      function(data) {
+        data.jobs.each do |job|
+          if (job.has_role_in_designing_new_product || job.has_positive_social_impact) && job.seems_like_it_would_be_challenging_and_fun
+            myApp.apply({
+              url: Google.headquarters,
+              job:job.id,
+              auth_token: 'nan0.n0ugat',
+              resume: 'im-so-experienced.pdf',
+              cover_letter: 'i-love-you-wont-you-please-love-me.doc',
+              },
+              function(data) {
+                if(data.response_from_google == 'success') alert ('woooohoooo, they like me!');
+                else applyToFacebook();
+              }
+           });
+          end
+        end
+
+      }
+  }  );
+

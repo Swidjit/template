@@ -25,6 +25,7 @@ class PostsController < ApplicationController
       @posts=@posts.tagged_with(params[:tag])
     end
     if params.has_key?(:cat)
+      @cat = params[:cat]
       @posts=@posts.where(:category_id=>params[:cat])
     end
 
