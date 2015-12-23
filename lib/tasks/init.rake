@@ -26,6 +26,21 @@ namespace :init do
     ActsAsTaggableOn::Tag.create(:name => "neuroplasticity")
   end
 
+  task :seed_projects => :environment do
+    Project.delete_all
+    Project.create(:title=>'Presidential Election Games', :description => 'A hub of discovery and fun for the 2016 presidential election. Fantasy games, candidate articles, debate headquarters, polls, memes, comedy and more.', :start_date => '', :end_date => '', :url => 'http://www.presidentialelectiongames.com', :slug => 'presidential-election-games', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+    #Project.create(:title=>'', :description => '', :start_date => '', :end_date => '', :url => '', :slug => '', :order => 1)
+  end
+
+
   task :seed_categories => :environment do
     Category.create(:title=>'Climate Justice',:description=>'Climate Justice',:slug=>'climate-justice')
     Category.create(:title=>'Social Justice',:description=>'Social Justice',:slug=>'social-justice')

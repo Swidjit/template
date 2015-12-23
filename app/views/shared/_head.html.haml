@@ -33,6 +33,8 @@
         %li.has-dropdown.small-dropdown
           %a{:href => "/brain-fun"} Projects
           %ul.dropdown.m-menu
+            -Project.all.each do |proj|
+              =link_to proj.title, project_path(proj.slug)
 
 
       %ul.right
