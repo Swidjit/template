@@ -1,6 +1,75 @@
 .row
-  .large-12.columns
-    test
+  .large-3.columns
+    #welcome-video
+      .embed-container
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "100%", :mozallowfullscreen => "", :src => 'https://www.youtube.com/embed/7Fh3Lgq2qdY', :webkitallowfullscreen => "", :width => "100%"}
+
+  .large-9.columns
+    #welcome-text
+      %p
+        %span.intro I love to dance,
+        and so I do it often. That's when I get my crazy on.
+
+      %p
+        When I do, it often draws attention my way, but there are things that deserve the attention much more than my dancing does.  So that's why I've hatched this plan to henceforth dance for
+        =link_to "climate change,",'/climate-justice'
+
+        =link_to "social injustice,", '/social-justice'
+
+        and
+        =link_to "gender inequality", '/gender-equality'
+
+      %p
+        The plan involves my dancing t-shirt, this website, and a whole lot of other parts.
+        =link_to "Get the full story >",'/pages/about'
 .row
-  .large-12.columns
-    %h3 Welcome.
+  .large-6.medium-6.columns
+    %h4 Posts
+    %hr
+    =render Post.all
+  .large-6.medium-6.columns
+    %h4 Videos
+    %hr
+    #results
+    %h4 Projects
+    %hr
+    #projects
+      this is a test
+
+
+
+:javascript
+
+  // Get Uploads Playlist
+  $.get(
+     "https://www.googleapis.com/youtube/v3/channels",{
+     part : 'contentDetails',
+     id : 'UCPtJaV3Q9t8Asf1yDW4WxcQ',
+     key: 'AIzaSyDd8fUMFim2BxBwBA7Ngp6OvSsGI9cXmTU'},
+     function(data) {
+        $.each( data.items, function( i, item ) {
+            pid = item.contentDetails.relatedPlaylists.uploads;
+            console.log(pid);
+            getVids(pid);
+        });
+    }
+  );
+
+  //Get Videos
+  function getVids(pid){
+      $.get(
+          "https://www.googleapis.com/youtube/v3/playlistItems",{
+          part : 'snippet',
+          maxResults : 20,
+          playlistId : pid,
+          key: 'AIzaSyDd8fUMFim2BxBwBA7Ngp6OvSsGI9cXmTU'},
+          function(data) {
+              var results;
+              $.each( data.items, function( i, item ) {
+                  results = '<li>'+ item.snippet.title +'</li>';
+                  console.log(item);
+                  $('#results').append('<iframe height="100%" src="https://www.youtube.com/embed/'+ item.snippet.resourceId.videoId +'" frameborder="0"></iframe>');
+              });
+          }
+      );
+  }
