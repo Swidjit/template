@@ -1,0 +1,35 @@
+.row
+  .large-12.columns
+    %h4 Abstract Photography
+    %p These are all photos straight off the lens without any modifications with image editing software, thanks to the magical light-distorting properties of ice.  Click on any to view it on Etsy.
+    #images
+
+
+:css
+  .etsy-item {
+    display: inline;
+
+  }
+  .etsy-item img {
+    width: 30%;
+    margin: 1%;
+    cursor: pointer;
+  }
+  .etsy-item img:hover {
+    border: 1px solid black;
+
+  }
+:javascript
+
+  $.get('https://openapi.etsy.com/v2/shops/playwithyourmind/listings/active?api_key=jrw4gcbif5yd18rg0h9rcdtw',function(data) {
+
+    console.log(data);
+    $.each(data.results,function(key,value) {
+    console.log('sdsd');
+       console.log(value);
+       $.get('https://openapi.etsy.com/v2/listings/'+ value.listing_id +'/images?api_key=jrw4gcbif5yd18rg0h9rcdtw',function(img) {
+          console.log(img);
+          $('#images').append('<div class="etsy-item"<a href="'+ value.url +'"><img src="'+ img.results[0].url_570xN +'"></img></a></div>');
+       });
+    });
+  });
