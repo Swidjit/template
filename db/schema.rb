@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223005114) do
+ActiveRecord::Schema.define(version: 20160111031907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,26 @@ ActiveRecord::Schema.define(version: 20151223005114) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "images", force: :cascade do |t|
+    t.integer  "photo_set_piece_id"
+    t.integer  "order"
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
+  end
+
+  create_table "photo_set_pieces", force: :cascade do |t|
+    t.string   "title",               default: "Untitled"
+    t.integer  "level",               default: 1
+    t.integer  "photo_set_series_id"
+    t.text     "shop_urls",                                array: true
+    t.string   "owner"
+    t.string   "owner_comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id"

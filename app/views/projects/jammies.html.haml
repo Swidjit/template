@@ -1,0 +1,20 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What can you do there
+    %ul
+      %li Listen on demand to all the songs/concerts from popular jam bands on archive.org
+      %li Create a personalized radion station of the songs you like most
+      %li Explore and discuss all the different versions of your favorite jams
+      %li Discover the songs and shows that others really enjoy
+      %li Curate playlists and share them with others
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('jammies_1.png')
+    =image_tag('jammies_2.png')

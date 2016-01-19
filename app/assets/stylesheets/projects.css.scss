@@ -1,0 +1,19 @@
+.project-link {
+  a {
+    font-weight: 500;
+  font-size: 1.3em;
+  background-color: #dde;
+  padding: 4px 6px;
+
+  }
+  ::after {
+    content: ' >'
+  }
+  margin-bottom: 10px;
+}
+
+.project-images {
+  img {
+    margin-bottom: 15px;
+  }
+}

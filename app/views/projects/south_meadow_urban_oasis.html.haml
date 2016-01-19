@@ -1,0 +1,19 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What's cool about this B&B
+    %ul
+      %li 1/4 acre with wetland within Ithaca city limits
+      %li permaculture garden / food forest / urban farm on site
+      %li cabinets stocked with teas & medicines from the garden
+      %li house descorated with loads of plants and art
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('ripples_1.png')
+    =image_tag('ripples_2.png')

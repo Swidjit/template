@@ -19,6 +19,12 @@ Rails.application.routes.draw do
   end
 
   resources :projects
+  resources :photo_set_pieces do
+    member do
+      post 'upload_file'
+    end
+
+  end
 
   resources :url_videos, :only => [:index, :show, :destroy]
   resources :url_images, :only => [:index, :show, :destroy]

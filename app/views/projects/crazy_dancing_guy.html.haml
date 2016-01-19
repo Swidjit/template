@@ -1,0 +1,19 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What can you do there
+    %ul
+      %li Watch & share videos of my crazy dancing
+      %li Learn about, and discuss, climate justice, social justice and gender equality
+      %li See all the projects I am working on at the moment
+      %li Buy my art
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('cdg_1.png')
+    =image_tag('cdg_2.png')

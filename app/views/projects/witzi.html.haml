@@ -1,0 +1,19 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What can you do there
+    %ul
+      %li Play 8 daily and weekly games of creativity
+      %li Once submission are closed, you can see how everyone else has responded and view/share your favorite responses
+      %li View the most interesting creations across the whole site as well as for each game
+      %li View stats on your creativity and see overall creativity leaderboards
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('jammies_1.png')
+    =image_tag('jammies_2.png')

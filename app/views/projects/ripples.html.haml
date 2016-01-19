@@ -1,0 +1,19 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What can you do there
+    %ul
+      %li Post content related to justice and sustainability
+      %li Discover, share and discuss content posted by others
+      %li Earn points as your content is shared across the site and across the web
+      %li View leaderboards to see who is spreading the most social good.
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('ripples_1.png')
+    =image_tag('ripples_2.png')

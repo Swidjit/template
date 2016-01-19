@@ -1,3 +1,34 @@
 .row
   .large-12.columns
     %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p PresidentialElectionGames.com is a hub of news, games and fun for the 2016 presidential election.
+
+    %h5 What can you do there
+    %ul
+      %li
+        Augment your debate experience by playing our debate fantasy games and hanging out in our game lobby while watching.
+        %ul.project-elaboration
+          %li Select a team of topics and earn points each time your topics are chosen
+          %li Generate a bingo card and watch as it fills in
+      %li
+        Take part in 3 other fantasy political games over the course of the debate season
+        %ul.project-elaboration
+          %li Buy and sell candidates and earn points as they go up and down in the polls
+          %li Guess which order the candidates will end up in the fight for delegates
+          %li Pick the eventual Republican and Democratic Tickets
+      %li Discover the latest election news and information
+      %li Watch/read election-related comedy
+      %li Create and browse election memes
+      %li See summaries of all debates, including breakdown of all topics discussed
+      %li View latest polling data and trends
+      %li See analysis of all topics and issues being raised during the primaries
+      %li Meet all the candidates
+      %li Vote early for the candidates and issues you care about and see how others have voted.
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('peg_1.png')
+    =image_tag('peg_2.png')

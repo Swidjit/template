@@ -1,0 +1,16 @@
+=form_for :photo_set_piece, url: photo_set_pieces_path do |f|
+  .row
+    .large-12.columns
+      =f.label :shop_urls
+      =f.text_field :shop_urls
+      =f.submit "save", :class=>"button large"
+
+    .large-8.medium-4.columns
+      =f.text_area :body, :class =>'first-input'
+      #tag-list
+
+    -#=f.select :category_id, options_for_select({'climate'=>1,'social justice'=>2,'gender equality'=>3})
+    -#%input{:type => 'text', :name => 'tags', :class => 'autocomplete', :autocomplete=>'off', :placeholder => 'tag keywords or topics'}
+    .autocomplete-options
+    .row#post-attachments
+      #new

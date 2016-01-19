@@ -1,0 +1,20 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What can you do there
+    %ul
+      %li Post a public or private mealat your house for others to join
+      %li Earn points for each person you feed
+      %li Use your points to attend other meals or barter for services
+      %li Discover meals around town that meet your food preferences
+      %li Share recipes and photos from the meals you host/attend
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('ks_1.png')
+    =image_tag('ks_2.png')

@@ -1,0 +1,25 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 Site 1: Bloomfield, CT
+    %ul
+      %li Established 2008
+
+    %h5 Site 2: Ithaca, NY
+    %ul
+      %li Established 2012
+
+    %h5 Site 1: Cape Cod, MA
+    %ul
+      %li Established 2014
+
+
+  .large-5.columns.project-images
+    =image_tag('ripples_1.png')
+    =image_tag('ripples_2.png')

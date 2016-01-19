@@ -1,0 +1,18 @@
+.row
+  .large-12.columns
+    %h3=@project.title
+    .project-link=link_to 'check it out', @project.url
+
+.row
+  .large-7.columns
+    %p=@project.description
+
+    %h5 What can you do there
+    %ul
+      %li Play 3 games of luck, up to 5 times a day
+      %li Keep track of your luck history and lucky streaks
+      %li See how your luck compares to others across the world
+    .project-link=link_to 'check it out', @project.url
+  .large-5.columns.project-images
+    =image_tag('pwym_1.png')
+    =image_tag('pwym_2.png')
