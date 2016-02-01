@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111031907) do
+ActiveRecord::Schema.define(version: 20160201140919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,21 @@ ActiveRecord::Schema.define(version: 20160111031907) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  create_table "collections", force: :cascade do |t|
+    t.string  "name"
+    t.string  "description"
+    t.text    "about"
+    t.integer "count",       default: 0
+  end
+
+  create_table "collections_photo_set_pieces", id: false, force: :cascade do |t|
+    t.integer "collection_id"
+    t.integer "photo_set_piece_id"
+  end
+
+  add_index "collections_photo_set_pieces", ["collection_id"], name: "index_collections_photo_set_pieces_on_collection_id", using: :btree
+  add_index "collections_photo_set_pieces", ["photo_set_piece_id"], name: "index_collections_photo_set_pieces_on_photo_set_piece_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.integer  "commentable_id"
@@ -72,6 +87,10 @@ ActiveRecord::Schema.define(version: 20160111031907) do
     t.string   "owner_comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   create_table "posts", force: :cascade do |t|

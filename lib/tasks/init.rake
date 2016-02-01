@@ -48,4 +48,12 @@ namespace :init do
     Category.create(:title=>'Gender Equality',:description=>'Gender Equality',:slug=>'gender-equality')
   end
 
+  task :seed_series => :environment do
+    Collection.create(:id => 1, :name => 'Ice Festival', :description => 'Using ice block remnants from the Ice Festival on the Ithaca commons.', :count => 0)
+    Collection.create(:id => 2, :name => 'Split Screens', :description => 'One image, two worlds.', :count => 0)
+    Collection.create(:id => 3, :name => 'Blurs', :description => 'Sometimes, life can be a little hard to make out.', :count => 0)
+    Collection.create(:id => 10, :name => 'Beard Hairs', :description => 'Oops, the artist shedded onto his work!', :count => 0)
+
+  end
+
 end

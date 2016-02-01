@@ -37,3 +37,9 @@ $(function(){
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+   	$(document).on('ready', function() {
+   		$("#s3-uploader").S3Uploader();
+   		console.log('hey');
+	});
+

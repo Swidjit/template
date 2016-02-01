@@ -1,19 +1,17 @@
-%h3 Add Some Photos
-%p Adding photos will help you get better leads
--puts @item
-=s3_uploader_form callback_url: upload_file_photo_set_piece_path(@item), remote: :true, callback_param: "photo_set_piece[image_url]", id: "s3-uploader" do
-  %div#test
-    .wrapper
-      =file_field_tag :file
-  %a.close-reveal-modal ×
-  %script#template-upload{:type => "text/x-tmpl"}
-    .upload{:id => "file-{%=o.unique_id%}"}
-      {%=o.name%}
-      .progress
-        .bar{:style => "width: 0%"}
-#photos
-  =render :partial => 'photos'
+
+.row
+  .large-8.medium-7.columns
+    %h4=@item.title
+    #photo
+      =render :partial => 'photos'
+
+  .large-4.medium-5.columns
+    %h4 Artwork Details
 
 :javascript
+  setInterval(rotate,5000);
 
-  $("#s3-uploader").S3Uploader();
+  function rotate() {
+    console.log('jey');
+    $('#photo').children().rotateRight(90);
+  }

@@ -26,6 +26,11 @@ Rails.application.routes.draw do
 
   end
 
+  resources :collections do
+    resources :photo_set_pieces, :only => [:index,:create]
+  end
+
+
   resources :url_videos, :only => [:index, :show, :destroy]
   resources :url_images, :only => [:index, :show, :destroy]
   resources :websites, :only => [:index, :show, :destroy]

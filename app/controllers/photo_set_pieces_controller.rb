@@ -13,12 +13,18 @@ class PhotoSetPiecesController < ApplicationController
     count = PhotoSetPiece.all.count
     level = count/100 + 1
     @post = PhotoSetPiece.create(:level=>level, :shop_urls => params[:photo_set_piece][:shop_urls])
-    redirect_to @post
+    params[:photo_set_piece][:collections].split(',').each do |col|
+      puts col
+      Collection.find(col).photo_set_pieces << @post
+    end
+    render 'add_photo'
   end
 
   def upload_file
     @piece = PhotoSetPiece.unscoped.where(:id=>params[:id]).first
-    @piece.images << Image.create(:pic => URI.parse(URI.unescape(params['url'])))
+    @piece.pic = URI.parse(URI.unescape(params['url']))
+    @piece.save
+    redirect_to @piece
   end
 
   def index
