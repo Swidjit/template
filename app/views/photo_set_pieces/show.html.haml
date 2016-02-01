@@ -1,17 +1,41 @@
 
 .row
   .large-8.medium-7.columns
-    %h4=@item.title
+    %h4
+      =link_to 'Abstract Art', photo_set_pieces_path
+      >
+      =@piece.title
     #photo
       =render :partial => 'photos'
 
   .large-4.medium-5.columns
     %h4 Artwork Details
-
+    %label price
+    %span $#{@piece.price}
+    %label taken on
+    %span=@piece.image_date.strftime('%m/%d/%y')
+    -if @piece.collections.length > 0
+      %label Collection(s)
+      -@piece.collections.each do |col|
+        =link_to col.name, collection_path(col)
+    -if @piece.owned
+      %label Owner
+      %span=@piece.owner
+      %label Owner
+    -else
+      .purchase
+        =link_to 'Purchase', '#', :class => 'button', :'data-piece-id' => @piece.id
 :javascript
   setInterval(rotate,5000);
 
   function rotate() {
-    console.log('jey');
     $('#photo').children().rotateRight(90);
   }
+
+  $('.purchase').on('click',function() {
+    $('#purchase').foundation('reveal','open');
+  });
+
+  $('.buy').on('click',function() {
+    //paypal code
+  });

@@ -1,7 +1,7 @@
 %h3 Add Some Photos
 %p Adding photos will help you get better leads
 -puts S3DirectUpload.config.inspect
-=s3_uploader_form callback_url: upload_file_photo_set_piece_path(@item), remote: :true, callback_param: "photo_set_piece[image_url]", id: "s3-uploader" do
+=s3_uploader_form callback_url: upload_file_photo_set_piece_path(@piece), remote: :true, callback_param: "photo_set_piece[image_url]", id: "s3-uploader" do
   %div#test
     .wrapper
       =file_field_tag :file
@@ -12,4 +12,4 @@
       .progress
         .bar{:style => "width: 0%"}
 #photos
-  =render :partial => 'photos'
+

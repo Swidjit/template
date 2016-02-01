@@ -529,4 +529,15 @@ span.intro {
 }
 
 
-
+.photo_set_piece {
+  img {
+    opacity: .9;
+    border: 0px;
+  }
+}
+.photo_set_piece:hover {
+  img {
+    opacity: 1;
+    border: 1px solid black;
+  }
+}

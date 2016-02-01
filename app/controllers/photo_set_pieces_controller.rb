@@ -2,7 +2,7 @@ class PhotoSetPiecesController < ApplicationController
   respond_to :js
 
   def show
-    @item = PhotoSetPiece.find(params[:id])
+    @piece = PhotoSetPiece.find(params[:id])
     #@comments = @item.comment_threads.order('created_at desc')
     #@new_comment = Comment.build_from(@item, current_user.id, "") if user_signed_in?
 
@@ -12,10 +12,10 @@ class PhotoSetPiecesController < ApplicationController
   def create
     count = PhotoSetPiece.all.count
     level = count/100 + 1
-    @post = PhotoSetPiece.create(:level=>level, :shop_urls => params[:photo_set_piece][:shop_urls])
+    @piece = PhotoSetPiece.create(:level=>level, :image_date => params[:photo_set_piece][:image_date],:shop_urls => params[:photo_set_piece][:shop_urls])
     params[:photo_set_piece][:collections].split(',').each do |col|
       puts col
-      Collection.find(col).photo_set_pieces << @post
+      Collection.find(col).photo_set_pieces << @piece
     end
     render 'add_photo'
   end
@@ -28,29 +28,7 @@ class PhotoSetPiecesController < ApplicationController
   end
 
   def index
-    @posts = Post.order(created_at: :desc)
-    if params.has_key?(:tag)
-      @posts=@posts.tagged_with(params[:tag])
-    end
-    if params.has_key?(:cat)
-      @cat = params[:cat]
-      @posts=@posts.where(:category_id=>params[:cat])
-    end
-
-    @total_pages = (@posts.length / 15) + 1
-
-    posts = @posts.pluck(:id)
-    if params.has_key?(:page)  && params[:page].to_i > 0
-      offset = (params[:page].to_i-1) * 15
-      ids = posts[offset..offset+14]
-      @posts = Post.find(ids)
-      render :partial => @posts
-    else
-
-      offset = 0
-      ids = posts[offset..offset+14]
-      @posts = Post.find(ids)
-    end
+    @pieces = PhotoSetPiece.all
   end
 
 
